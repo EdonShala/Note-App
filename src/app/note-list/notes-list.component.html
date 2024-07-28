@@ -1,0 +1,9 @@
+<h1>Here are all the Notes!</h1>
+@for (note of notes; track note.id) {
+<li>
+  <button>
+    <span class="note-title">{{ note.title }}</span>
+    <span class="note-text">{{ note.text }}</span>
+  </button>
+</li>
+}
