@@ -1,9 +1,12 @@
-<h1>Here are all the Notes!</h1>
-@for (note of notes; track note.id) {
-<li>
-  <button>
-    <span class="note-title">{{ note.title }}</span>
-    <span class="note-text">{{ note.text }}</span>
-  </button>
-</li>
-}
+<div class="container">
+  <ul class="notes">
+    @for (note of notes; track $index) {
+    <li>
+      <button (click)="show(note.title)">
+        <span class="note-title">{{ note.title }}</span>
+        <span class="note-text">{{ note.text }}</span>
+      </button>
+    </li>
+    }
+  </ul>
+</div>

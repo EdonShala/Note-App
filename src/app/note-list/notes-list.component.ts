@@ -9,4 +9,8 @@ import { NOTES } from '../../notes';
 })
 export class NotesListComponent {
   notes = NOTES;
+
+  show(title: string) {
+    alert(title);
+  }
 }
