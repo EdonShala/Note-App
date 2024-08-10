@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { NotesListComponent } from './note-list/notes-list.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { AddNoteComponent } from './add-note/add-note.component';
     NotesListComponent,
     ReactiveFormsModule,
     AddNoteComponent,
+    RouterModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
