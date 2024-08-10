@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NOTES } from '../../notes';
+import { Notes } from '../../notes';
+import { CommonModule } from '@angular/common';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-add-note',
   standalone: true,
   templateUrl: './add-note.component.html',
   styleUrl: './add-note.component.scss',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormErrorComponent],
 })
 export class AddNoteComponent {
   addNoteForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    text: new FormControl(''),
+    description: new FormControl(''),
   });
   addNote() {
     let title = this.addNoteForm.value.title ?? '';
-    let text = this.addNoteForm.value.text ?? '';
+    let description = this.addNoteForm.value.description ?? '';
 
     if (this.addNoteForm.valid) {
-      let ids = NOTES.map((a) => a.id);
+      let ids = Notes.map((a) => a.id);
       let maxId = 0;
       if (ids.length > 0) {
         maxId = Math.max(...ids);
@@ -28,9 +30,9 @@ export class AddNoteComponent {
       let newNote = {
         id: maxId + 1,
         title: title,
-        text: text,
+        description: description,
       };
-      NOTES.unshift(newNote);
+      Notes.unshift(newNote);
       this.addNoteForm.reset();
     }
   }

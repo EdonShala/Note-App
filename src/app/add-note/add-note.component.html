@@ -4,18 +4,30 @@
     <div>
       <label for="note-title">
         Title:
-        <input id="note-title" formControlName="title" />
+        <input id="note-title" formControlName="title" class="form-control" />
       </label>
+      <app-form-error
+        [fieldName]="'Title'"
+        [errors]="addNoteForm.get('title')!.errors"
+      ></app-form-error>
     </div>
     <div>
-      <label for="note-text">
-        Text:
-        <input id="note-text" formControlName="text" />
+      <label for="note-description">
+        Description:
+        <input
+          id="note-description"
+          formControlName="description"
+          class="form-control"
+        />
       </label>
+      <app-form-error
+        [fieldName]="'Description'"
+        [errors]="addNoteForm.get('description')!.errors"
+      ></app-form-error>
     </div>
     <button
       type="button"
-      class="button"
+      class="button btn btn-success"
       type="submit"
       [disabled]="!addNoteForm.valid"
     >

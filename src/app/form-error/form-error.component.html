@@ -1,0 +1,5 @@
+<div *ngIf="errors" class="invalid-feedback">
+  <div *ngIf="errors['required']">
+    {{ fieldName ? fieldName : "Field" }} is required
+  </div>
+</div>

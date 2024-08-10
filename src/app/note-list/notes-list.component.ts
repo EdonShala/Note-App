@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NOTES } from '../../notes';
+import { Notes } from '../../notes';
 
 @Component({
   selector: 'app-notes-list',
@@ -8,7 +8,7 @@ import { NOTES } from '../../notes';
   styleUrl: './notes-list.component.scss',
 })
 export class NotesListComponent {
-  notes = NOTES;
+  notes = Notes;
 
   show(title: string) {
     alert(title);
