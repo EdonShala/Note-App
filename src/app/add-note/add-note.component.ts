@@ -40,4 +40,8 @@ export class AddNoteComponent {
       this.router.navigateByUrl('/');
     }
   }
+
+  cancelNote() {
+    this.router.navigateByUrl('/');
+  }
 }
