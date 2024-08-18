@@ -5,7 +5,8 @@ import {
   ActivatedRoute,
   RouterOutlet,
 } from '@angular/router';
-import { Notes } from '../../notes';
+import { Note, Notes } from '../../notes';
+import { NotificationService } from '../notificationService.service';
 
 @Component({
   selector: 'app-note-detail',
@@ -15,9 +16,35 @@ import { Notes } from '../../notes';
   imports: [RouterModule, RouterOutlet],
 })
 export class NoteDetailComponent {
-  router = inject(Router);
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
-  activeRoute = inject(ActivatedRoute);
-  id = Number(this.activeRoute.snapshot.paramMap.get('id'));
-  note = Notes.find((i) => i.id === this.id);
+  activeRoute: ActivatedRoute = inject(ActivatedRoute);
+  id: number = Number(this.activeRoute.snapshot.paramMap.get('id'));
+  note: Note = Notes.find((i) => i.id === this.id) as Note;
+
+  deleteOneNote() {
+    const confirmation: boolean = confirm(
+      'Do you really want to delete this note?'
+    );
+
+    if (confirmation) {
+      if (this.note) {
+        let delNote: number = Notes.indexOf(this.note, 0);
+        if (delNote > -1) {
+          Notes.splice(delNote, 1);
+
+          this.notificationService.setNotification(
+            'The note was successfully deleted'
+          );
+
+          this.router.navigateByUrl('');
+        }
+      }
+    } else {
+      this.router.navigateByUrl('/note');
+    }
+  }
 }

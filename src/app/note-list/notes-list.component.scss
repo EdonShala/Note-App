@@ -12,7 +12,7 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-button {
+.notes button {
   width: 100%;
   border: none;
   background: none;
@@ -22,14 +22,24 @@ button {
 }
 
 nav button {
+  margin-right: 10px;
   width: auto;
   display: inline-block;
   padding: 10px;
   border-radius: 20px;
-  color: #fff;
   font-size: 12pt;
-  background-color: #28a745;
   text-decoration: none;
   margin-top: 10px;
   margin-bottom: 30px;
+}
+
+.notification {
+  background-color: #e4d740d8;
+  color: rgb(10, 10, 10);
+  padding: 15px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 5px;
 }

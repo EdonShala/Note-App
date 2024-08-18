@@ -1,6 +1,5 @@
 #note-container {
   width: auto;
-  margin-top: 30px;
   margin-right: 15%;
   margin-left: 15%;
   margin-bottom: 20px;
@@ -12,14 +11,30 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 22px;
+}
+
 nav button {
-  width: auto;
-  display: inline-block;
+  margin-right: 10px;
   padding: 10px;
   border-radius: 20px;
   font-size: 12pt;
   text-decoration: none;
   margin-top: 10px;
   margin-bottom: 30px;
-  margin-right: 5px;
+}
+
+.notification {
+  background-color: #e4d740d8;
+  color: rgb(10, 10, 10);
+  padding: 15px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 5px;
 }

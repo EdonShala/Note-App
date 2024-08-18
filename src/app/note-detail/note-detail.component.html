@@ -1,12 +1,13 @@
-@if (note) {
-<div id="note-container">
-  <div class="note-title">{{ note.title }}</div>
-  <div class="note-id">ID: {{ note.id }}</div>
-  <div class="note-description">{{ note.description }}</div>
-</div>
-}
 <nav>
   <button class="btn btn-success" routerLink="">Back</button>
   <button class="btn btn-secondary" routerLink="">Edit</button>
-  <button class="btn btn-danger" routerLink="">Delete</button>
+  <button class="btn btn-danger" (click)="deleteOneNote()">Delete</button>
 </nav>
+
+@if (note) {
+<div id="note-container">
+  <div class="note-title">{{ note.title }}</div>
+  <!-- <div class="note-id">ID: {{ note.id }}</div> -->
+  <div class="note-description">{{ note.description }}</div>
+</div>
+}

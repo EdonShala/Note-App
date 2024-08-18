@@ -1,6 +1,7 @@
 <div class="container">
   <nav>
     <button class="btn btn-success" routerLink="/new">Add new Note</button>
+    <button class="btn btn-danger" (click)="deleteAll()">Delete All</button>
   </nav>
   <ul class="notes">
     @for (note of notes; track $index) {
@@ -13,3 +14,9 @@
     }
   </ul>
 </div>
+
+@if(notificationMessage) {
+<div class="notification">
+  {{ notificationMessage }}
+</div>
+}
