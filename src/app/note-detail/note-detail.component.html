@@ -13,16 +13,18 @@
 			type="text"
 			[(ngModel)]="note.title"
 			class="form-control"
-		/>} @if(!isEditing) {<span>{{ note.title }}</span
-		>}
+		/>
+		} @if(!isEditing) {<span>{{ note.title }}</span>
+		}
 	</div>
 	<div class="note-description">
-		@if(isEditing) {<input
+		@if(isEditing) {<textarea
 			type="text"
 			[(ngModel)]="note.description"
 			class="form-control"
-		/>} @if(!isEditing) {<span>{{ note.description }}</span
-		>}
+		></textarea>
+		} @if(!isEditing) {<span>{{ note.description }}</span>
+		}
 	</div>
 </div>
 }

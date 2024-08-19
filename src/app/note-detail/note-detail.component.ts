@@ -52,10 +52,18 @@ export class NoteDetailComponent {
 
 	editNote() {
 		if (this.isEditing) {
+			if (!this.note.title.trim()) {
+				this.notificationService.setNotification(
+					'Title and description cannot be empty!'
+				);
+				return;
+			}
+
 			this.isEditing = false;
 			this.notificationService.setNotification(
 				'Note was successfully updated'
 			);
+			this.router.navigateByUrl('');
 		} else {
 			this.isEditing = true;
 		}

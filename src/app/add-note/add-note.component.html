@@ -1,38 +1,42 @@
 <div class="container">
-  <h2>New Note</h2>
-  <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
-    <div>
-      <label for="note-title">
-        Title:
-        <input id="note-title" formControlName="title" class="form-control" />
-      </label>
-      <app-form-error
-        [fieldName]="'Title'"
-        [errors]="addNoteForm.get('title')!.errors"
-      ></app-form-error>
-    </div>
-    <div>
-      <label for="note-description">
-        Description:
-        <input
-          id="note-description"
-          formControlName="description"
-          class="form-control"
-        />
-      </label>
-      <app-form-error
-        [fieldName]="'Description'"
-        [errors]="addNoteForm.get('description')!.errors"
-      ></app-form-error>
-    </div>
-    <button
-      type="button"
-      class="button btn btn-success"
-      type="submit"
-      [disabled]="!addNoteForm.valid"
-    >
-      Add Note
-    </button>
-    <button class="btn btn-danger" (click)="cancelNote()">Cancel</button>
-  </form>
+	<h2>New Note</h2>
+	<form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
+		<div>
+			<label for="note-title">
+				Title:
+				<input
+					id="note-title"
+					formControlName="title"
+					class="form-control"
+				/>
+			</label>
+			<app-form-error
+				[fieldName]="'Title'"
+				[errors]="addNoteForm.get('title')!.errors"
+			></app-form-error>
+		</div>
+		<div>
+			<label for="note-description">
+				Description:
+				<textarea
+					id="note-description"
+					formControlName="description"
+					class="form-control"
+				></textarea>
+			</label>
+			<app-form-error
+				[fieldName]="'Description'"
+				[errors]="addNoteForm.get('description')!.errors"
+			></app-form-error>
+		</div>
+		<button
+			type="button"
+			class="button btn btn-success"
+			type="submit"
+			[disabled]="!addNoteForm.valid"
+		>
+			Add Note
+		</button>
+		<button class="btn btn-danger" (click)="cancelNote()">Cancel</button>
+	</form>
 </div>

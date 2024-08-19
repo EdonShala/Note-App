@@ -2,26 +2,26 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class NotificationService {
-  private messageSubject = new BehaviorSubject<string | null>(null);
+	private messageSubject = new BehaviorSubject<string | null>(null);
 
-  constructor() {}
+	constructor() {}
 
-  setNotification(message: string) {
-    this.messageSubject.next(message);
+	setNotification(message: string) {
+		this.messageSubject.next(message);
 
-    setTimeout(() => {
-      this.clearNotification();
-    }, 5000);
-  }
+		setTimeout(() => {
+			this.clearNotification();
+		}, 3000);
+	}
 
-  getNotification() {
-    return this.messageSubject.asObservable();
-  }
+	getNotification() {
+		return this.messageSubject.asObservable();
+	}
 
-  clearNotification() {
-    this.messageSubject.next(null);
-  }
+	clearNotification() {
+		this.messageSubject.next(null);
+	}
 }

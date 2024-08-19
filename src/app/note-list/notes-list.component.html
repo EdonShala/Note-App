@@ -1,22 +1,24 @@
 <div class="container">
-  <nav>
-    <button class="btn btn-success" routerLink="/new">Add new Note</button>
-    <button class="btn btn-danger" (click)="deleteAll()">Delete All</button>
-  </nav>
-  <ul class="notes">
-    @for (note of notes; track $index) {
-    <li>
-      <button [routerLink]="['/note', note.id]">
-        <span class="note-title">{{ note.title }}</span>
-        <span class="note-description">{{ note.description }}</span>
-      </button>
-    </li>
-    }
-  </ul>
+	<nav>
+		<button class="btn btn-success" routerLink="/new">Add new Note</button>
+		<button class="btn btn-danger" (click)="deleteAll()">Delete All</button>
+	</nav>
+	<ul class="notes">
+		@for (note of notes; track $index) {
+		<li>
+			<button [routerLink]="['/note', note.id]">
+				<span class="note-title">{{ note.title }}</span>
+				<div class="note-description" style="white-space: pre-wrap">
+					{{ note.description }}
+				</div>
+			</button>
+		</li>
+		}
+	</ul>
 </div>
 
 @if(notificationMessage) {
 <div class="notification">
-  {{ notificationMessage }}
+	{{ notificationMessage }}
 </div>
 }
