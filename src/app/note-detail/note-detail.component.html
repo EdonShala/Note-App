@@ -1,13 +1,28 @@
 <nav>
-  <button class="btn btn-success" routerLink="">Back</button>
-  <button class="btn btn-secondary" routerLink="">Edit</button>
-  <button class="btn btn-danger" (click)="deleteOneNote()">Delete</button>
+	<button class="btn btn-success" routerLink="">Back</button>
+	<button class="btn btn-secondary" (click)="editNote()">
+		{{ isEditing ? 'Save' : 'Edit' }}
+	</button>
+	<button class="btn btn-danger" (click)="deleteOneNote()">Delete</button>
 </nav>
 
 @if (note) {
 <div id="note-container">
-  <div class="note-title">{{ note.title }}</div>
-  <!-- <div class="note-id">ID: {{ note.id }}</div> -->
-  <div class="note-description">{{ note.description }}</div>
+	<div class="note-title">
+		@if(isEditing) {<input
+			type="text"
+			[(ngModel)]="note.title"
+			class="form-control"
+		/>} @if(!isEditing) {<span>{{ note.title }}</span
+		>}
+	</div>
+	<div class="note-description">
+		@if(isEditing) {<input
+			type="text"
+			[(ngModel)]="note.description"
+			class="form-control"
+		/>} @if(!isEditing) {<span>{{ note.description }}</span
+		>}
+	</div>
 </div>
 }

@@ -34,7 +34,7 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
   deleteAll() {
     const confirmation: boolean = confirm(
-      'Do you really want to delete this note?'
+      'Do you really want to delete ALL notes?'
     );
 
     if (confirmation) {
