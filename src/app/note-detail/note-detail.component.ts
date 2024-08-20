@@ -8,6 +8,7 @@ import {
 import { Note, Notes } from '../../notes';
 import { NotificationService } from '../notificationService.service';
 import { FormsModule } from '@angular/forms';
+import { LocalStorage } from '../localstorage.component';
 
 @Component({
 	selector: 'app-note-detail',
@@ -23,8 +24,10 @@ export class NoteDetailComponent {
 	) {}
 
 	activeRoute: ActivatedRoute = inject(ActivatedRoute);
+	localStorage = new LocalStorage();
 	id: number = Number(this.activeRoute.snapshot.paramMap.get('id'));
-	note: Note = Notes.find((i) => i.id === this.id) as Note;
+	notes: Note[] = this.localStorage.getLocalStorage();
+	note: Note = this.notes.find((i) => i.id === this.id) as Note;
 	isEditing: boolean = false;
 
 	deleteOneNote() {
@@ -34,14 +37,13 @@ export class NoteDetailComponent {
 
 		if (confirmation) {
 			if (this.note) {
-				let delNote: number = Notes.indexOf(this.note, 0);
+				let delNote: number = this.notes.indexOf(this.note, 0);
 				if (delNote > -1) {
-					Notes.splice(delNote, 1);
-
+					this.notes.splice(delNote, 1);
+					this.localStorage.setLocalStorage(this.notes);
 					this.notificationService.setNotification(
 						'The note was successfully deleted'
 					);
-
 					this.router.navigateByUrl('');
 				}
 			}
@@ -60,6 +62,7 @@ export class NoteDetailComponent {
 			}
 
 			this.isEditing = false;
+			this.localStorage.setLocalStorage(this.notes);
 			this.notificationService.setNotification(
 				'Note was successfully updated'
 			);

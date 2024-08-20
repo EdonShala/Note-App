@@ -7,7 +7,7 @@
 		@for (note of notes; track $index) {
 		<li>
 			<button [routerLink]="['/note', note.id]">
-				<span class="note-title">{{ note.title }}</span>
+				<div class="note-title">{{ note.title }}</div>
 				<div class="note-description" style="white-space: pre-wrap">
 					{{ note.description }}
 				</div>
