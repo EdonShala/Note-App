@@ -29,6 +29,13 @@ export class NoteDetailComponent {
 	notes: Note[] = this.localStorage.getLocalStorage();
 	note: Note = this.notes.find((i) => i.id === this.id) as Note;
 	isEditing: boolean = false;
+	notificationMessage: string | null = null;
+
+	notificationSubscription = this.notificationService
+		.getNotification()
+		.subscribe((message) => {
+			this.notificationMessage = message;
+		});
 
 	deleteOneNote() {
 		const confirmation: boolean = confirm(
@@ -55,10 +62,9 @@ export class NoteDetailComponent {
 	editNote() {
 		if (this.isEditing) {
 			if (!this.note.title.trim()) {
-				this.notificationService.setNotification(
-					'Title and description cannot be empty!'
+				return this.notificationService.setNotification(
+					'The title cannot be empty!'
 				);
-				return;
 			}
 
 			this.isEditing = false;
