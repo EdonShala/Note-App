@@ -1,45 +1,46 @@
-.notes {
-  width: 100%;
-}
+// .notes {
+//   width: 100%;
+// }
 .notes li {
-  margin-bottom: 20px;
-  list-style: none;
-  padding: 10px;
-  background-color: #ffffff;
-  border-radius: 15px;
-  text-align: left;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	width: auto;
+	margin-bottom: 20px;
+	list-style: none;
+	padding: 10px;
+	background-color: #ffffff;
+	border-radius: 15px;
+	text-align: left;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .notes button {
-  width: 100%;
-  border: none;
-  background: none;
-  padding: 20px;
-  cursor: pointer;
-  text-align: start;
+	width: 100%;
+	border: none;
+	background: none;
+	padding: 20px;
+	cursor: pointer;
+	text-align: start;
 }
 
 nav button {
-  margin-right: 10px;
-  width: auto;
-  display: inline-block;
-  padding: 10px;
-  border-radius: 20px;
-  font-size: 12pt;
-  text-decoration: none;
-  margin-top: 10px;
-  margin-bottom: 30px;
+	margin-right: 10px;
+	width: auto;
+	display: inline-block;
+	padding: 10px;
+	border-radius: 20px;
+	font-size: 12pt;
+	text-decoration: none;
+	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
 .notification {
-  background-color: #e4d740d8;
-  color: rgb(10, 10, 10);
-  padding: 15px;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  border-radius: 5px;
+	background-color: #e4d740d8;
+	color: rgb(10, 10, 10);
+	padding: 15px;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	z-index: 1000;
+	border-radius: 5px;
 }

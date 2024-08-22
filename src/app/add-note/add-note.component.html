@@ -8,6 +8,11 @@
 					id="note-title"
 					formControlName="title"
 					class="form-control"
+					[ngClass]="{
+						'is-invalid':
+							addNoteForm.get('title')?.invalid &&
+							addNoteForm.get('title')?.touched
+					}"
 				/>
 			</label>
 			<app-form-error
