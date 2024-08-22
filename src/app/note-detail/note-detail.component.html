@@ -9,16 +9,14 @@
 @if (note) {
 <div id="note-container">
 	<div class="note-title">
-		@if(isEditing) {<input
-			type="text"
-			[(ngModel)]="note.title"
-			class="form-control"
-		/>
+		@if(isEditing) { Title:
+		<input type="text" [(ngModel)]="note.title" class="form-control" />
 		} @if(!isEditing) {<span>{{ note.title }}</span>
 		}
 	</div>
 	<div class="note-description">
-		@if(isEditing) {<textarea
+		@if(isEditing) { Description:
+		<textarea
 			type="text"
 			[(ngModel)]="note.description"
 			class="form-control"
