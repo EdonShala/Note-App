@@ -11,7 +11,8 @@
 	<div class="note-title">
 		@if(isEditing) { Title:
 		<input type="text" [(ngModel)]="note.title" class="form-control" />
-		} @if(!isEditing) {<span>{{ note.title }}</span>
+		} @if(!isEditing) {
+		<span>{{ note.title }}</span>
 		}
 	</div>
 	<div class="note-description">
@@ -21,7 +22,8 @@
 			[(ngModel)]="note.description"
 			class="form-control"
 		></textarea>
-		} @if(!isEditing) {<span>{{ note.description }}</span>
+		} @if(!isEditing) {
+		<span>{{ note.description }}</span>
 		}
 	</div>
 </div>
@@ -30,3 +32,5 @@
 	{{ notificationMessage }}
 </div>
 }
+
+<app-confirm-modal #confirmModal></app-confirm-modal>

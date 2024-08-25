@@ -1,21 +1,18 @@
-import { Component, inject } from '@angular/core';
-import {
-	Router,
-	RouterModule,
-	ActivatedRoute,
-	RouterOutlet,
-} from '@angular/router';
-import { Note, Notes } from '../../notes';
-import { NotificationService } from '../notificationService.service';
+import { Component, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
+import { NotificationService } from '../notificationService.service';
 import { LocalStorage } from '../localstorage.component';
+import { Note } from '../../notes';
+import { take } from 'rxjs';
 
 @Component({
 	selector: 'app-note-detail',
 	standalone: true,
 	templateUrl: './note-detail.component.html',
-	styleUrl: './note-detail.component.scss',
-	imports: [RouterModule, RouterOutlet, FormsModule],
+	styleUrls: ['./note-detail.component.scss'],
+	imports: [RouterModule, FormsModule, ConfirmModalComponent],
 })
 export class NoteDetailComponent {
 	constructor(
@@ -23,13 +20,15 @@ export class NoteDetailComponent {
 		private notificationService: NotificationService
 	) {}
 
-	activeRoute: ActivatedRoute = inject(ActivatedRoute);
+	activeRoute = inject(ActivatedRoute);
 	localStorage = new LocalStorage();
 	id: number = Number(this.activeRoute.snapshot.paramMap.get('id'));
 	notes: Note[] = this.localStorage.getLocalStorage();
 	note: Note = this.notes.find((i) => i.id === this.id) as Note;
 	isEditing: boolean = false;
 	notificationMessage: string | null = null;
+
+	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
 	notificationSubscription = this.notificationService
 		.getNotification()
@@ -38,15 +37,11 @@ export class NoteDetailComponent {
 		});
 
 	deleteOneNote() {
-		const confirmation: boolean = confirm(
-			'Do you really want to delete this note?'
-		);
-
-		if (confirmation) {
+		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
 			if (this.note) {
-				let delNote: number = this.notes.indexOf(this.note, 0);
-				if (delNote > -1) {
-					this.notes.splice(delNote, 1);
+				const delNoteIndex = this.notes.indexOf(this.note);
+				if (delNoteIndex > -1) {
+					this.notes.splice(delNoteIndex, 1);
 					this.localStorage.setLocalStorage(this.notes);
 					this.notificationService.setNotification(
 						'The note was successfully deleted'
@@ -54,9 +49,12 @@ export class NoteDetailComponent {
 					this.router.navigateByUrl('');
 				}
 			}
-		} else {
-			this.router.navigateByUrl('/note');
-		}
+		});
+
+		this.confirmModal.title = 'Delete Note';
+		this.confirmModal.message = 'Do you really want to delete this note?';
+
+		this.confirmModal.openModal();
 	}
 
 	editNote() {
@@ -76,5 +74,8 @@ export class NoteDetailComponent {
 		} else {
 			this.isEditing = true;
 		}
+	}
+	ngOnDestroy(): void {
+		this.notificationSubscription.unsubscribe();
 	}
 }

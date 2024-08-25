@@ -1,22 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { LocalStorage } from '../localstorage.component';
 import { NotificationService } from '../notificationService.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Note } from '../../notes';
+import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 
 @Component({
 	selector: 'app-notes-list',
 	standalone: true,
 	templateUrl: './notes-list.component.html',
-	styleUrl: './notes-list.component.scss',
-	imports: [RouterOutlet, RouterModule],
+	styleUrls: ['./notes-list.component.scss'],
+	imports: [RouterOutlet, RouterModule, ConfirmModalComponent],
 })
 export class NotesListComponent implements OnInit, OnDestroy {
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
 	notes: Note[] = [];
 	localStorage = new LocalStorage();
+
+	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
 	constructor(private notificationService: NotificationService) {}
 
@@ -30,17 +33,18 @@ export class NotesListComponent implements OnInit, OnDestroy {
 	}
 
 	deleteAll() {
-		const confirmation: boolean = confirm(
-			'Do you really want to delete ALL notes?'
-		);
+		this.confirmModal.title = 'Delete All Notes';
+		this.confirmModal.message = 'Do you really want to delete ALL notes?';
 
-		if (confirmation) {
+		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
 			this.notes = [];
 			this.localStorage.setLocalStorage(this.notes);
 			this.notificationService.setNotification(
 				'All notes were successfully deleted'
 			);
-		}
+		});
+
+		this.confirmModal.openModal();
 	}
 
 	ngOnDestroy() {
