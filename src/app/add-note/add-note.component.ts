@@ -1,11 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Notes } from '../../notes';
+import { Component } from '@angular/core';
+import {
+	ReactiveFormsModule,
+	FormGroup,
+	FormControl,
+	Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormErrorComponent } from '../form-error/form-error.component';
 import { Router } from '@angular/router';
-import { LocalStorage } from '../localstorage.component';
+import { LocalStorageService } from '../shared/localstorage.service';
+import { Note } from '../../notes';
 
 @Component({
 	selector: 'app-add-note',
@@ -15,34 +19,35 @@ import { LocalStorage } from '../localstorage.component';
 	imports: [ReactiveFormsModule, CommonModule, FormErrorComponent],
 })
 export class AddNoteComponent {
-	router = inject(Router);
-	localStorage = new LocalStorage();
+	constructor(
+		private localStorageService: LocalStorageService,
+		private router: Router
+	) {}
+
 	addNoteForm = new FormGroup({
 		title: new FormControl('', Validators.required),
 		description: new FormControl(''),
 	});
 
 	addNote() {
-		const updatedNotes = this.localStorage.getLocalStorage();
-		Notes.splice(0, Notes.length, ...updatedNotes);
+		const updatedNotes = this.localStorageService.getLocalStorage();
 
-		let title = this.addNoteForm.value.title ?? '';
-		let description = this.addNoteForm.value.description ?? '';
+		let title = this.addNoteForm.value.title?.trim() ?? '';
+		let description = this.addNoteForm.value.description?.trim() ?? '';
 
 		if (this.addNoteForm.valid) {
-			let ids = Notes.map((a) => a.id);
-			let maxId = 0;
-			if (ids.length > 0) {
-				maxId = Math.max(...ids);
-			}
-			let newNote = {
+			const ids = updatedNotes.map((note) => note.id);
+			const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+
+			const newNote: Note = {
 				id: maxId + 1,
 				title: title,
 				description: description,
 			};
-			Notes.unshift(newNote);
 
-			this.localStorage.setLocalStorage(Notes);
+			updatedNotes.unshift(newNote);
+			this.localStorageService.setLocalStorage(updatedNotes);
+
 			this.addNoteForm.reset();
 			this.router.navigateByUrl('/');
 		}

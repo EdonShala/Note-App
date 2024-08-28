@@ -1,29 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
-@import "bootstrap/scss/bootstrap";
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+
+$list-group-item-border-radius: 15px;
+
+@import 'bootstrap/scss/bootstrap';
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  background-color: #edf1f5;
-  font-family: Arial, Helvetica, sans-serif;
+	padding: 0;
+	margin: 0;
+	background-color: #edf1f5;
+	font-family: Arial, Helvetica, sans-serif;
 }
 .container {
-  text-align: center;
-  margin: 0 auto;
-  padding: 15px;
+	text-align: center;
+	margin: 0 auto;
+	padding: 15px;
 }
 .note-title {
-  display: block;
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  font-size: 11pt;
-  color: #000;
+	display: block;
+	text-align: left;
+	font-weight: bold;
+	margin-bottom: 5px;
+	text-transform: uppercase;
+	font-size: 11pt;
+	color: #000;
 }
 .note-text {
-  display: block;
-  text-align: left;
-  color: gray;
-  font-size: 10pt;
+	display: block;
+	text-align: left;
+	color: gray;
+	font-size: 10pt;
 }

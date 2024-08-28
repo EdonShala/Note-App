@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { LocalStorage } from '../localstorage.component';
-import { NotificationService } from '../notificationService.service';
+import { LocalStorageService } from '../shared/localstorage.service';
+import { NotificationService } from '../shared/notification.service';
 import { Subscription, take } from 'rxjs';
 import { Note } from '../../notes';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
@@ -14,22 +14,30 @@ import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.com
 	imports: [RouterOutlet, RouterModule, ConfirmModalComponent],
 })
 export class NotesListComponent implements OnInit, OnDestroy {
+	constructor(
+		private localStorageService: LocalStorageService,
+		private notificationService: NotificationService
+	) {}
+
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
 	notes: Note[] = [];
-	localStorage = new LocalStorage();
 
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
-	constructor(private notificationService: NotificationService) {}
-
 	ngOnInit() {
-		this.notes = this.localStorage.getLocalStorage();
+		this.notes = this.localStorageService.getLocalStorage();
 		this.notificationSubscription = this.notificationService
 			.getNotification()
 			.subscribe((message) => {
 				this.notificationMessage = message;
 			});
+	}
+
+	ngOnDestroy() {
+		if (this.notificationSubscription) {
+			this.notificationSubscription.unsubscribe();
+		}
 	}
 
 	deleteAll() {
@@ -38,18 +46,12 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
 			this.notes = [];
-			this.localStorage.setLocalStorage(this.notes);
+			this.localStorageService.setLocalStorage(this.notes);
 			this.notificationService.setNotification(
 				'All notes were successfully deleted'
 			);
 		});
 
 		this.confirmModal.openModal();
-	}
-
-	ngOnDestroy() {
-		if (this.notificationSubscription) {
-			this.notificationSubscription.unsubscribe();
-		}
 	}
 }

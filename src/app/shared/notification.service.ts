@@ -7,8 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 export class NotificationService {
 	private messageSubject = new BehaviorSubject<string | null>(null);
 
-	constructor() {}
-
 	setNotification(message: string) {
 		this.messageSubject.next(message);
 

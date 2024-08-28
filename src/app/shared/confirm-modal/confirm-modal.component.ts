@@ -14,8 +14,6 @@ export class ConfirmModalComponent {
 	@Output() onConfirm: EventEmitter<void> = new EventEmitter();
 	@Output() onClose: EventEmitter<void> = new EventEmitter();
 
-	constructor() {}
-
 	openModal(): void {
 		const modalElement = document.getElementById('confirmModal');
 		if (modalElement) {

@@ -3,15 +3,13 @@
 		<button class="btn btn-success" routerLink="/new">Add new Note</button>
 		<button class="btn btn-danger" (click)="deleteAll()">Delete All</button>
 	</nav>
-	<ul class="notes">
+	<ul class="list-group">
 		@for (note of notes; track $index) {
-		<li>
-			<button [routerLink]="['/note', note.id]">
-				<div class="note-title">{{ note.title }}</div>
-				<div class="note-description" style="white-space: pre-wrap">
-					{{ note.description }}
-				</div>
-			</button>
+		<li class="list-group-item mb-3" [routerLink]="['/note', note.id]">
+			<div class="note-title">{{ note.title }}</div>
+			<div class="note-description" style="white-space: pre-wrap">
+				{{ note.description }}
+			</div>
 		</li>
 		}
 	</ul>

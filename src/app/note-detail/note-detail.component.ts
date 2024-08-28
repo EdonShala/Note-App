@@ -1,11 +1,10 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
-import { NotificationService } from '../notificationService.service';
-import { LocalStorage } from '../localstorage.component';
-import { Note } from '../../notes';
-import { take } from 'rxjs';
+import { NotificationService } from '../shared/notification.service';
+import { Subscription, take } from 'rxjs';
+import { NoteDetailModel } from './note-detail.model';
 
 @Component({
 	selector: 'app-note-detail',
@@ -13,69 +12,66 @@ import { take } from 'rxjs';
 	templateUrl: './note-detail.component.html',
 	styleUrls: ['./note-detail.component.scss'],
 	imports: [RouterModule, FormsModule, ConfirmModalComponent],
+	providers: [NoteDetailModel],
 })
-export class NoteDetailComponent {
-	constructor(
-		private router: Router,
-		private notificationService: NotificationService
-	) {}
-
-	activeRoute = inject(ActivatedRoute);
-	localStorage = new LocalStorage();
-	id: number = Number(this.activeRoute.snapshot.paramMap.get('id'));
-	notes: Note[] = this.localStorage.getLocalStorage();
-	note: Note = this.notes.find((i) => i.id === this.id) as Note;
-	isEditing: boolean = false;
-	notificationMessage: string | null = null;
-
+export class NoteDetailComponent implements OnInit, OnDestroy {
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
-	notificationSubscription = this.notificationService
-		.getNotification()
-		.subscribe((message) => {
-			this.notificationMessage = message;
-		});
+	private notificationSubscription!: Subscription;
+	notificationMessage: string | null = null;
 
-	deleteOneNote() {
+	model = inject(NoteDetailModel);
+	router = inject(Router);
+	notificationService = inject(NotificationService);
+	activeRoute = inject(ActivatedRoute);
+
+	ngOnInit(): void {
+		const id = Number(this.activeRoute.snapshot.paramMap.get('id'));
+		this.model.loadNoteById(id);
+
+		this.notificationSubscription = this.notificationService
+			.getNotification()
+			.subscribe((message) => {
+				this.notificationMessage = message;
+			});
+	}
+
+	ngOnDestroy(): void {
+		if (this.notificationSubscription) {
+			this.notificationSubscription.unsubscribe();
+		}
+	}
+
+	deleteOneNote(): void {
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
-			if (this.note) {
-				const delNoteIndex = this.notes.indexOf(this.note);
-				if (delNoteIndex > -1) {
-					this.notes.splice(delNoteIndex, 1);
-					this.localStorage.setLocalStorage(this.notes);
-					this.notificationService.setNotification(
-						'The note was successfully deleted'
-					);
-					this.router.navigateByUrl('');
-				}
-			}
+			this.model.deleteNote();
+			this.notificationService.setNotification(
+				'The note was successfully deleted'
+			);
+			this.router.navigateByUrl('');
 		});
 
 		this.confirmModal.title = 'Delete Note';
 		this.confirmModal.message = 'Do you really want to delete this note?';
-
 		this.confirmModal.openModal();
 	}
 
-	editNote() {
-		if (this.isEditing) {
-			if (!this.note.title.trim()) {
-				return this.notificationService.setNotification(
-					'The title cannot be empty!'
-				);
+	editNote(): void {
+		if (this.model.isEditing) {
+			const validationMessage = this.model.validateNote();
+			if (validationMessage) {
+				this.notificationService.setNotification(validationMessage);
+				return;
 			}
 
-			this.isEditing = false;
-			this.localStorage.setLocalStorage(this.notes);
+			this.model.isEditing = false;
+			this.model.saveNote();
 			this.notificationService.setNotification(
 				'Note was successfully updated'
 			);
 			this.router.navigateByUrl('');
 		} else {
-			this.isEditing = true;
+			this.model.isEditing = true;
 		}
-	}
-	ngOnDestroy(): void {
-		this.notificationSubscription.unsubscribe();
 	}
 }
