@@ -1,24 +1,38 @@
-<div class="container">
-	<nav>
-		<button class="btn btn-success" routerLink="/new">Add new Note</button>
-		<button class="btn btn-danger" (click)="deleteAll()">Delete All</button>
-	</nav>
-	<ul class="list-group">
-		@for (note of notes; track $index) {
-		<li class="list-group-item mb-3" [routerLink]="['/note', note.id]">
-			<div class="note-title">{{ note.title }}</div>
-			<div class="note-description" style="white-space: pre-wrap">
-				{{ note.description }}
-			</div>
-		</li>
-		}
-	</ul>
-</div>
+<nav class="mb-4">
+	<div class="d-flex justify-content-center gap-2">
+		<button class="btn btn-success rounded-pill" routerLink="/new">
+			Add new Note
+		</button>
+		<button class="btn btn-danger rounded-pill" (click)="deleteAll()">
+			Delete All
+		</button>
+	</div>
+</nav>
 
-@if(notificationMessage) {
-<div class="notification">
-	{{ notificationMessage }}
+<div class="container">
+	<div class="row justify-content-center">
+		@for (note of notes; track $index) {
+		<div class="col-md-12 mb-3">
+			<div
+				class="card h-100"
+				[routerLink]="['/note', note.id]"
+				style="cursor: pointer"
+			>
+				<div class="card-body">
+					<h5 class="card-title">{{ note.title }}</h5>
+					<p class="card-text" style="white-space: pre-wrap">
+						{{ note.description }}
+					</p>
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+	@if(notificationMessage) {
+	<div class="notification text-center">
+		{{ notificationMessage }}
+	</div>
+	}
 </div>
-}
 
 <app-confirm-modal #confirmModal></app-confirm-modal>

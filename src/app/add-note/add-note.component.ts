@@ -9,13 +9,12 @@ import { CommonModule } from '@angular/common';
 import { FormErrorComponent } from '../form-error/form-error.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../shared/localstorage.service';
-import { Note } from '../../notes';
+import { NoteAddModel } from './add-note.model';
 
 @Component({
 	selector: 'app-add-note',
 	standalone: true,
 	templateUrl: './add-note.component.html',
-	styleUrl: './add-note.component.scss',
 	imports: [ReactiveFormsModule, CommonModule, FormErrorComponent],
 })
 export class AddNoteComponent {
@@ -39,7 +38,7 @@ export class AddNoteComponent {
 			const ids = updatedNotes.map((note) => note.id);
 			const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 
-			const newNote: Note = {
+			const newNote: NoteAddModel = {
 				id: maxId + 1,
 				title: title,
 				description: description,

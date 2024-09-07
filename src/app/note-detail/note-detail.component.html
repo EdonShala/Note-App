@@ -1,40 +1,50 @@
-<nav>
-	<button class="btn btn-success" routerLink="">Back</button>
-	<button class="btn btn-secondary" (click)="editNote()">
-		{{ model.isEditing ? 'Save' : 'Edit' }}
-	</button>
-	<button class="btn btn-danger" (click)="deleteOneNote()">Delete</button>
+<nav class="mb-4">
+	<div class="d-flex justify-content-center gap-2">
+		<button class="btn btn-success rounded-pill" routerLink="">Back</button>
+		<button class="btn btn-secondary rounded-pill" (click)="editNote()">
+			{{ isEditing ? 'Save' : 'Edit' }}
+		</button>
+		<button class="btn btn-danger rounded-pill" (click)="deleteOneNote()">
+			Delete
+		</button>
+	</div>
 </nav>
 
-@if (model.note) {
-<div id="note-container">
-	<div class="note-title">
-		@if(model.isEditing) { Title:
-		<input
-			type="text"
-			[(ngModel)]="model.note.title"
-			class="form-control"
-		/>
-		} @if(!model.isEditing) {
-		<span>{{ model.note.title }}</span>
-		}
+<div class="container">
+	@if (note) {
+	<div class="row justify-content-center">
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-title">
+					@if(isEditing) { Title:
+					<input
+						type="text"
+						[(ngModel)]="note.title"
+						class="card-text form-control"
+					/>
+					} @if(!isEditing) {
+					<span>{{ note.title }}</span>
+					}
+				</div>
+				<div class="card-title">
+					@if(isEditing) { Description:
+					<textarea
+						type="text"
+						[(ngModel)]="note.description"
+						class="card-text form-control"
+					></textarea>
+					} @if(!isEditing) {
+					<span>{{ note.description }}</span>
+					}
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="note-description">
-		@if(model.isEditing) { Description:
-		<textarea
-			type="text"
-			[(ngModel)]="model.note.description"
-			class="form-control"
-		></textarea>
-		} @if(!model.isEditing) {
-		<span>{{ model.note.description }}</span>
-		}
+	} @if(notificationMessage) {
+	<div class="notification text-center">
+		{{ notificationMessage }}
 	</div>
+	}
 </div>
-} @if(notificationMessage) {
-<div class="notification">
-	{{ notificationMessage }}
-</div>
-}
 
 <app-confirm-modal #confirmModal></app-confirm-modal>

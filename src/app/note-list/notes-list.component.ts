@@ -3,8 +3,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { LocalStorageService } from '../shared/localstorage.service';
 import { NotificationService } from '../shared/notification.service';
 import { Subscription, take } from 'rxjs';
-import { Note } from '../../notes';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
+import { NoteListModel } from './note-list.model';
 
 @Component({
 	selector: 'app-notes-list',
@@ -21,7 +21,7 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
-	notes: Note[] = [];
+	notes: NoteListModel[] = [];
 
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
