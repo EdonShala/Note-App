@@ -5,11 +5,11 @@ import { NoteDto } from './note.dto';
 	providedIn: 'root',
 })
 export class LocalStorageService {
-	setLocalStorage(notes: NoteDto[]): void {
+	set(notes: NoteDto[]): void {
 		localStorage.setItem('notes', JSON.stringify(notes));
 	}
 
-	getLocalStorage(): NoteDto[] {
+	get(): NoteDto[] {
 		const localStorageStoredNote = localStorage.getItem('notes');
 		let result: NoteDto[] = [];
 		if (localStorageStoredNote) {
@@ -18,7 +18,7 @@ export class LocalStorageService {
 		return result;
 	}
 
-	clearLocalStorage(): void {
+	clear(): void {
 		localStorage.clear();
 	}
 }

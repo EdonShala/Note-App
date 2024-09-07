@@ -1,48 +1,44 @@
 <nav class="mb-4">
 	<div class="d-flex justify-content-center gap-2">
+		@if(!isEditing) {
 		<button class="btn btn-success rounded-pill" routerLink="">Back</button>
-		<button class="btn btn-secondary rounded-pill" (click)="editNote()">
-			{{ isEditing ? 'Save' : 'Edit' }}
+		}
+		<button class="btn rounded-pill" [ngClass]="isEditing ? 'btn-success' : 'btn-secondary'" (click)="editNote()">
+			{{ isEditing ? "Save" : "Edit" }}
 		</button>
-		<button class="btn btn-danger rounded-pill" (click)="deleteOneNote()">
-			Delete
-		</button>
+		@if(isEditing) {
+		<button class="btn btn-secondary rounded-pill" (click)="cancelEdit()">Cancel</button>
+		}
+		<button class="btn btn-danger rounded-pill" (click)="deleteOneNote()">Delete</button>
 	</div>
 </nav>
 
 <div class="container">
 	@if (note) {
-	<div class="row justify-content-center">
-		<div class="card mb-3">
-			<div class="card-body">
-				<div class="card-title">
-					@if(isEditing) { Title:
-					<input
-						type="text"
-						[(ngModel)]="note.title"
-						class="card-text form-control"
-					/>
-					} @if(!isEditing) {
-					<h5 class="fw-bold">{{ note.title }}</h5>
-					}
-				</div>
-				<div class="card-title">
-					@if(isEditing) { Description:
-					<textarea
-						type="text"
-						[(ngModel)]="note.description"
-						class="card-text form-control"
-					></textarea>
-					} @if(!isEditing) {
-					<span>{{ note.description }}</span>
-					}
-				</div>
+	<div class="card">
+		<div class="card-body">
+			@if(isEditing) {
+			<div class="form-group">
+				<label for="title">Title:</label>
+				<input id="title" type="text" [(ngModel)]="note.title" class="form-control" />
 			</div>
+			<div class="form-group">
+				<label for="description">Description:</label>
+				<textarea id="description" [(ngModel)]="note.description" class="form-control card-text"></textarea>
+			</div>
+			} @else {
+			<div class="card-title">
+				<h5 class="fw-bold">{{ note.title }}</h5>
+			</div>
+			<p class="card-text">
+				{{ note.description }}
+			</p>
+			} @if(notificationMessage) {
+			<div class="notification text-center">
+				{{ notificationMessage }}
+			</div>
+			}
 		</div>
-	</div>
-	} @if(notificationMessage) {
-	<div class="notification text-center">
-		{{ notificationMessage }}
 	</div>
 	}
 </div>

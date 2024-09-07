@@ -3,16 +3,17 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 import { NotificationService } from '../shared/notification.service';
-import { Subscription, take } from 'rxjs';
 import { NoteDetailModel } from './note-detail.model';
 import { LocalStorageService } from '../shared/localstorage.service';
+import { CommonModule } from '@angular/common';
+import { take } from 'rxjs';
 
 @Component({
 	selector: 'app-note-detail',
 	standalone: true,
 	templateUrl: './note-detail.component.html',
 	styleUrls: ['./note-detail.component.scss'],
-	imports: [RouterModule, FormsModule, ConfirmModalComponent],
+	imports: [RouterModule, FormsModule, ConfirmModalComponent, CommonModule],
 })
 export class NoteDetailComponent {
 	constructor(
@@ -23,10 +24,11 @@ export class NoteDetailComponent {
 
 	activeRoute = inject(ActivatedRoute);
 	id: number = Number(this.activeRoute.snapshot.paramMap.get('id'));
-	notes: NoteDetailModel[] = this.localStorage.getLocalStorage();
+	notes: NoteDetailModel[] = this.localStorage.get();
 	note: NoteDetailModel = this.notes.find(
 		(i) => i.id === this.id
 	) as NoteDetailModel;
+	originalNote: NoteDetailModel = { ...this.note };
 	isEditing: boolean = false;
 	notificationMessage: string | null = null;
 
@@ -44,7 +46,7 @@ export class NoteDetailComponent {
 				const delNoteIndex = this.notes.indexOf(this.note);
 				if (delNoteIndex > -1) {
 					this.notes.splice(delNoteIndex, 1);
-					this.localStorage.setLocalStorage(this.notes);
+					this.localStorage.set(this.notes);
 					this.notificationService.setNotification(
 						'The note was successfully deleted'
 					);
@@ -68,7 +70,8 @@ export class NoteDetailComponent {
 			}
 
 			this.isEditing = false;
-			this.localStorage.setLocalStorage(this.notes);
+			this.originalNote = { ...this.note };
+			this.localStorage.set(this.notes);
 			this.notificationService.setNotification(
 				'Note was successfully updated'
 			);
@@ -76,6 +79,11 @@ export class NoteDetailComponent {
 		} else {
 			this.isEditing = true;
 		}
+	}
+
+	cancelEdit() {
+		this.isEditing = false;
+		this.note = { ...this.originalNote };
 	}
 
 	ngOnDestroy(): void {

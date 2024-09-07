@@ -26,7 +26,7 @@ export class NotesListComponent implements OnInit, OnDestroy {
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
 	ngOnInit() {
-		this.notes = this.localStorageService.getLocalStorage();
+		this.notes = this.localStorageService.get() || [];
 		this.notificationSubscription = this.notificationService
 			.getNotification()
 			.subscribe((message) => {
@@ -46,7 +46,7 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
 			this.notes = [];
-			this.localStorageService.setLocalStorage(this.notes);
+			this.localStorageService.set(this.notes);
 			this.notificationService.setNotification(
 				'All notes were successfully deleted'
 			);

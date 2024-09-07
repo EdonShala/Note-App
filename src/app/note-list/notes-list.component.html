@@ -1,28 +1,17 @@
 <nav class="mb-4">
 	<div class="d-flex justify-content-center gap-2">
-		<button class="btn btn-success rounded-pill" routerLink="/new">
-			Add new Note
-		</button>
-		<button class="btn btn-danger rounded-pill" (click)="deleteAll()">
-			Delete All
-		</button>
+		<button class="btn btn-success rounded-pill" routerLink="/new">Add new Note</button>
+		<button class="btn btn-danger rounded-pill" (click)="deleteAll()">Delete All</button>
 	</div>
 </nav>
 
 <div class="container">
-	<div class="row justify-content-center">
+	<div class="justify-content-center">
 		@for (note of notes; track $index) {
-		<div class="col-md-12 mb-3">
-			<div
-				class="card h-100"
-				[routerLink]="['/note', note.id]"
-				style="cursor: pointer"
-			>
+		<div class="mb-3">
+			<div class="card" [routerLink]="['/note', note.id]" style="cursor: pointer">
 				<div class="card-body">
 					<h5 class="card-title fw-bold">{{ note.title }}</h5>
-					<p class="card-text" style="white-space: pre-wrap">
-						{{ note.description }}
-					</p>
 				</div>
 			</div>
 		</div>

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import {
-	ReactiveFormsModule,
-	FormGroup,
-	FormControl,
-	Validators,
+	ReactiveFormsModule, FormGroup, FormControl, Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormErrorComponent } from '../form-error/form-error.component';
+import { FormErrorComponent } from '../shared/form-error/form-error.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../shared/localstorage.service';
 import { NoteAddModel } from './add-note.model';
@@ -29,7 +26,7 @@ export class AddNoteComponent {
 	});
 
 	addNote() {
-		const updatedNotes = this.localStorageService.getLocalStorage();
+		const updatedNotes = this.localStorageService.get();
 
 		let title = this.addNoteForm.value.title?.trim() ?? '';
 		let description = this.addNoteForm.value.description?.trim() ?? '';
@@ -45,7 +42,7 @@ export class AddNoteComponent {
 			};
 
 			updatedNotes.unshift(newNote);
-			this.localStorageService.setLocalStorage(updatedNotes);
+			this.localStorageService.set(updatedNotes);
 
 			this.addNoteForm.reset();
 			this.router.navigateByUrl('/');
