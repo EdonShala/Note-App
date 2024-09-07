@@ -6,7 +6,9 @@
 		<div class="card-body">
 			<form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
 				<div class="mb-3">
-					<label for="note-title" class="form-label"> Title: </label>
+					<label for="note-title" class="form-label fw-bold">
+						Title:
+					</label>
 					<input
 						id="note-title"
 						formControlName="title"
@@ -23,7 +25,7 @@
 					></app-form-error>
 				</div>
 				<div class="mb-3">
-					<label for="note-description" class="form-label">
+					<label for="note-description" class="form-label fw-bold">
 						Description:
 					</label>
 					<textarea
