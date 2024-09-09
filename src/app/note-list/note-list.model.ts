@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
 import { NoteDto } from '../shared/note.dto';
 
-@Injectable()
 export class NoteListModel {
 	id!: number;
 	title!: string;

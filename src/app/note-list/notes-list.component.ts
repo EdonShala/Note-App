@@ -5,13 +5,13 @@ import { NotificationService } from '../shared/notification.service';
 import { Subscription, take } from 'rxjs';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 import { NoteListModel } from './note-list.model';
+import { NotificationComponent } from '../shared/app-notification/app-notification.component';
 
 @Component({
 	selector: 'app-notes-list',
 	standalone: true,
 	templateUrl: './notes-list.component.html',
-	styleUrls: ['./notes-list.component.scss'],
-	imports: [RouterOutlet, RouterModule, ConfirmModalComponent],
+	imports: [RouterOutlet, RouterModule, ConfirmModalComponent, NotificationComponent],
 })
 export class NotesListComponent implements OnInit, OnDestroy {
 	constructor(

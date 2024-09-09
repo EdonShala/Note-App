@@ -4,8 +4,7 @@ import { Modal } from 'bootstrap';
 @Component({
 	selector: 'app-confirm-modal',
 	standalone: true,
-	templateUrl: './confirm-modal.component.html',
-	styleUrls: ['./confirm-modal.component.scss'],
+	templateUrl: './confirm-modal.component.html'
 })
 export class ConfirmModalComponent {
 	@Input() title: string = 'Confirm';
