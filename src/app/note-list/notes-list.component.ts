@@ -22,7 +22,8 @@ export class NotesListComponent implements OnInit, OnDestroy {
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
 	ngOnInit() {
-		this.notes = this.noteService.getAllNotes() || [];
+		const dtos = this.noteService.getAllNotes();
+		this.notes = dtos.map(dto => new NoteListModel(dto))
 
 		this.notificationSubscription = this.noteService.notificationService.getNotification().subscribe((message) => {
 			this.notificationMessage = message;
@@ -35,17 +36,13 @@ export class NotesListComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	/**
-	 * Löscht alle Notizen nach Bestätigung
-	 */
 	deleteAll() {
 		this.confirmModal.title = 'Delete All Notes';
 		this.confirmModal.message = 'Do you really want to delete ALL notes?';
 
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
-			// Nutze die deleteAllNotes Methode aus dem NoteService
 			this.noteService.deleteAllNotes();
-			this.notes = []; // Aktualisiere die lokale Notizenliste
+			this.notes = [];
 		});
 
 		this.confirmModal.openModal();

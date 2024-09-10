@@ -13,7 +13,7 @@ export class NoteService {
   ) {}
 
   getAllNotes(): NoteDto[] {
-    return this.localStorageService.get();
+    return this.localStorageService.get() || [];
   }
 
   getNoteById(id: number): NoteDto | undefined {

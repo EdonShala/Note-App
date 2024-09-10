@@ -8,19 +8,17 @@
 <div class="container">
 	<div class="justify-content-center">
 		@for (note of notes; track $index) {
-		<div class="mb-3">
-			<div class="card" [routerLink]="['/note', note.id]" style="cursor: pointer">
+			<div class="card mb-3" [routerLink]="['/note', note.id]" style="cursor: pointer">
 				<div class="card-body">
 					<h5 class="card-title fw-bold">{{ note.title }}</h5>
 				</div>
 			</div>
-		</div>
 		}
 	</div>
-	@if(notificationMessage) {
-	<app-notification class="notification text-center">
-		{{ notificationMessage }}
-	</app-notification>
+	@if (notificationMessage) {
+		<app-notification class="notification text-center">
+			{{ notificationMessage }}
+		</app-notification>
 	}
 </div>
 
