@@ -1,8 +1,10 @@
-import { NoteDto } from '../shared/note.dto';
+import { NoteDto } from "../shared/note.dto";
 
 export class NoteDetailModel extends NoteDto {
-	constructor(dto: NoteDto) {
+	constructor(dto?: NoteDto) {
 		super();
-		Object.assign(this, dto);
+		if (dto) {
+			Object.assign(this, dto);
+		}
 	}
 }

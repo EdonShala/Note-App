@@ -25,6 +25,7 @@ export class NoteDetailComponent implements OnDestroy {
 
 	id: number = Number(this.activeRoute.snapshot.paramMap.get("id"));
 	note: NoteDetailModel | undefined;
+	noteEdit: NoteDetailModel | undefined;
 	isEditing: boolean = false;
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
@@ -56,22 +57,25 @@ export class NoteDetailComponent implements OnDestroy {
 	}
 
 	editNote() {
-		if (this.isEditing) {
-			if (!this.note?.title.trim()) {
-				return this.noteService.notificationService.setNotification("The title cannot be empty!");
+		if (this.note) {
+			if (this.isEditing && this.noteEdit) {
+				this.isEditing = false;
+				this.noteService.saveNote(this.noteEdit);
+				this.noteService.notificationService.setNotification("Note was successfully updated");
+				this.router.navigateByUrl("");
+			} else {
+				this.isEditing = true;
+				this.noteEdit = new NoteDetailModel();
+				this.noteEdit.id = this.note.id;
+				this.noteEdit.title = this.note.title;
+				this.noteEdit.description = this.note.description;
 			}
-
-			this.isEditing = false;
-			this.noteService.saveNote(this.note);
-			this.noteService.notificationService.setNotification("Note was successfully updated");
-			this.router.navigateByUrl("");
-		} else {
-			this.isEditing = true;
 		}
 	}
 
 	cancelEdit() {
 		this.isEditing = false;
+		this.noteEdit = undefined;
 	}
 
 	ngOnDestroy(): void {
