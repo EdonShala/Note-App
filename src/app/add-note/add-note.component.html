@@ -1,7 +1,7 @@
 <div class="container mt-4">
 	<div class="card">
 		<div class="card-header">
-			<h2 class="mb-0">New Note</h2>
+			<h2 class="mb-0">{{note.id `New Note`}}</h2>
 		</div>
 		<div class="card-body">
 			<form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
@@ -12,7 +12,7 @@
 						formControlName="title"
 						class="form-control"
 						[ngClass]="{
-							'is-invalid': addNoteForm.get('title')?.invalid && addNoteForm.get('title')?.touched
+							'is-invalid': addNoteForm.get('title')?.invalid && addNoteForm.get('title')?.touched,
 						}" />
 					<app-form-error [fieldName]="'Title'" [errors]="addNoteForm.get('title')!.errors"></app-form-error>
 				</div>
