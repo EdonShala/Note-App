@@ -1,0 +1,31 @@
+<div class="container mt-4">
+	<div class="card">
+		<div class="card-header">
+			<h2 class="mb-0">{{ note.id !== "0" ? "Edit" : "New" }} Note</h2>
+		</div>
+		<div class="card-body">
+			<form [formGroup]="formGroup" (ngSubmit)="addNote()">
+				<div class="mb-3">
+					<label for="note-title" class="form-label fw-bold">Title:</label>
+					<input
+						id="note-title"
+						formControlName="title"
+						class="form-control"
+						[ngClass]="{
+							'is-invalid': formGroup.get('title')?.invalid && formGroup.get('title')?.touched,
+						}" />
+					<app-form-error [fieldName]="'Title'" [errors]="formGroup.get('title')!.errors"></app-form-error>
+				</div>
+				<div class="mb-3">
+					<label for="note-description" class="form-label fw-bold">Description:</label>
+					<textarea id="note-description" formControlName="description" class="form-control"></textarea>
+					<app-form-error [fieldName]="'Description'" [errors]="formGroup.get('description')!.errors"></app-form-error>
+				</div>
+				<div class="d-flex">
+					<button type="submit" class="btn btn-success rounded-pill" [disabled]="!formGroup.valid">Save</button>
+					<button class="btn btn-outline-secondary rounded-pill ms-2" type="button" (click)="cancelNote()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

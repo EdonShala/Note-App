@@ -1,12 +1,12 @@
-import { RouterModule, Routes } from "@angular/router";
-import { NotesListComponent } from "./note-list/notes-list.component";
-import { AddNoteComponent } from "./add-note/add-note.component";
 import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 import { NoteDetailComponent } from "./note-detail/note-detail.component";
+import { NoteEditComponent } from "./note-edit/note-edit.component";
+import { NoteListComponent } from "./note-list/note-list.component";
 
 export const routes: Routes = [
-	{ path: "", component: NotesListComponent },
-	{ path: "edit/:id", component: AddNoteComponent },
+	{ path: "", component: NoteListComponent },
+	{ path: "edit/:id", component: NoteEditComponent },
 	{ path: "note/:id", component: NoteDetailComponent },
 ];
 

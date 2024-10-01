@@ -1,10 +1,15 @@
 import { NoteDto } from "../shared/note.dto";
 
-export class NoteDetailModel extends NoteDto {
+export class NoteDetailModel {
+	id!: string;
+	title!: string;
+	description?: string;
+
 	constructor(dto?: NoteDto) {
-		super();
 		if (dto) {
-			Object.assign(this, dto);
+			this.id = dto.id;
+			this.title = dto.title;
+			this.description = dto.description;
 		}
 	}
 }

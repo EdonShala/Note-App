@@ -1,7 +1,7 @@
-import { NoteDto } from '../shared/note.dto';
+import { NoteDto } from "../shared/note.dto";
 
 export class NoteListModel {
-	id!: number;
+	id!: string;
 	title!: string;
 
 	constructor(dto: NoteDto) {

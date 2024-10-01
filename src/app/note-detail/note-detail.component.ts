@@ -1,13 +1,13 @@
-import { Component, ViewChild, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { FormsModule } from "@angular/forms";
-import { ConfirmModalComponent } from "../shared/confirm-modal/confirm-modal.component";
 import { CommonModule } from "@angular/common";
-import { take, Subscription } from "rxjs";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { Subscription, take } from "rxjs";
 import { NotificationComponent } from "../shared/app-notification/app-notification.component";
-import { NoteDetailModel } from "./note-detail.model";
+import { ConfirmModalComponent } from "../shared/confirm-modal/confirm-modal.component";
 import { NoteService } from "../shared/note.service";
 import { NotificationService } from "../shared/notification.service";
+import { NoteDetailModel } from "./note-detail.model";
 
 @Component({
 	selector: "app-note-detail",
@@ -23,19 +23,29 @@ export class NoteDetailComponent implements OnDestroy {
 		private notificationService: NotificationService
 	) {}
 
-	id: number = Number(this.activeRoute.snapshot.paramMap.get("id"));
-	note!: NoteDetailModel;
-	noteEdit: NoteDetailModel | undefined;
-	isEditing: boolean = false;
+	id!: string;
+	note!: NoteDetailModel | undefined;
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
 
 	@ViewChild("confirmModal") confirmModal!: ConfirmModalComponent;
 
 	ngOnInit() {
-		const note = this.noteService.getNoteById(this.id);
-		if (note) {
-			this.note = new NoteDetailModel(note);
+		this.init();
+	}
+
+	ngOnDestroy(): void {
+		this.notificationSubscription?.unsubscribe();
+	}
+
+	init() {
+		const idParam = this.activeRoute.snapshot.paramMap.get("id");
+		if (idParam && this.id !== "0") {
+			this.id = idParam;
+			const dto = this.noteService.get(this.id);
+			this.note = new NoteDetailModel(dto);
+		} else {
+			console.error("No ID-Param found");
 		}
 
 		this.notificationSubscription = this.notificationService.getNotification().subscribe(message => {
@@ -46,7 +56,7 @@ export class NoteDetailComponent implements OnDestroy {
 	deleteOneNote() {
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(() => {
 			if (this.note) {
-				this.noteService.deleteNoteById(this.note.id);
+				this.noteService.delete(this.note.id);
 				this.router.navigateByUrl("");
 			}
 		});
@@ -57,15 +67,6 @@ export class NoteDetailComponent implements OnDestroy {
 	}
 
 	editNote() {
-		this.router.navigateByUrl(`/edit/${this.note!.id}`);
-	}
-
-	cancelEdit() {
-		this.isEditing = false;
-		this.noteEdit = undefined;
-	}
-
-	ngOnDestroy(): void {
-		this.notificationSubscription?.unsubscribe();
+		this.router.navigateByUrl(`/edit/${this.id}`);
 	}
 }
