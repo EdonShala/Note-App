@@ -1,6 +1,6 @@
 <nav class="mb-4">
 	<div class="d-flex justify-content-center gap-2">
-		<button class="btn btn-success rounded-pill" routerLink="/new">Add new Note</button>
+		<button class="btn btn-success rounded-pill" routerLink="/edit/0">Add new Note</button>
 		<button class="btn btn-danger rounded-pill" (click)="deleteAll()">Delete All</button>
 	</div>
 </nav>
@@ -10,7 +10,15 @@
 		@for (note of notes; track $index) {
 			<div class="card mb-3" [routerLink]="['/note', note.id]" style="cursor: pointer">
 				<div class="card-body">
-					<h5 class="card-title fw-bold">{{ note.title }}</h5>
+					<h5 class="card-title mb-0">{{ note.title }}</h5>
+				</div>
+			</div>
+		}
+
+		@if (notes.length === 0) {
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title mb-0">- no entries -</h5>
 				</div>
 			</div>
 		}
@@ -22,4 +30,4 @@
 	}
 </div>
 
-<app-confirm-modal #confirmModal></app-confirm-modal>
+<app-confirm-modal #confirmModal />

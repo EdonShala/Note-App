@@ -1,5 +1,5 @@
 export class NoteDto {
-	id!: number;
+	id!: string;
 	title!: string;
 	description?: string;
 }
