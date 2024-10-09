@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { Subscription, take } from "rxjs";
-import { NotificationComponent } from "../shared/app-notification/app-notification.component";
-import { ConfirmModalComponent } from "../shared/confirm-modal/confirm-modal.component";
+import { NotificationComponent } from "../shared/components/app-notification/app-notification.component";
+import { ConfirmModalComponent } from "../shared/components/confirm-modal/confirm-modal.component";
 import { NoteService } from "../shared/note.service"; // Importiere den neuen NoteService
 import { NoteListModel } from "./note-list.model";
 
@@ -13,7 +13,7 @@ import { NoteListModel } from "./note-list.model";
 	imports: [RouterOutlet, RouterModule, ConfirmModalComponent, NotificationComponent],
 })
 export class NoteListComponent implements OnInit, OnDestroy {
-	constructor(private noteService: NoteService) {}
+	private noteService: NoteService = inject(NoteService);
 
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
@@ -23,7 +23,7 @@ export class NoteListComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		const dtos = this.noteService.getAll();
-		this.notes = dtos.map(dto => new NoteListModel(dto));
+		this.notes = dtos.map(dto => new NoteListModel(dto)).sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
 		this.notificationSubscription = this.noteService.notificationService.getNotification().subscribe(message => {
 			this.notificationMessage = message;

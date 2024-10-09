@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormErrorComponent } from "../shared/form-error/form-error.component";
+import { FormErrorComponent } from "../shared/components/form-error/form-error.component";
 import { NoteService } from "../shared/note.service";
 import { NoteEditModel } from "./note-edit.model";
 
@@ -52,7 +52,12 @@ export class NoteEditComponent {
 		if (this.formGroup.valid) {
 			this.note.title = title as string;
 			this.note.description = description as string;
-			this.noteService.save(this.note);
+			this.noteService.save({
+				id: this.note.id,
+				title: this.note.title,
+				description: this.note.description,
+				createdAt: this.note.createdAt.toString(),
+			});
 			this.formGroup.reset();
 			this.router.navigateByUrl("/");
 		}

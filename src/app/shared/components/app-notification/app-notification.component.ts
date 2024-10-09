@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { NotificationService } from "../notification.service";
+import { NotificationService } from "../../notification.service";
 
 @Component({
 	selector: "app-notification",

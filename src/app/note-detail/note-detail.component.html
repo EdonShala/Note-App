@@ -16,15 +16,15 @@
 				<p class="card-text">
 					{{ note.description }}
 				</p>
-
-				@if (notificationMessage) {
-					<app-notification class="notification text-center">
-						{{ notificationMessage }}
-					</app-notification>
-				}
 			</div>
 		</div>
 	}
 </div>
+
+@if (notificationMessage) {
+	<app-notification class="notification text-center">
+		{{ notificationMessage }}
+	</app-notification>
+}
 
 <app-confirm-modal #confirmModal></app-confirm-modal>
