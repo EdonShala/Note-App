@@ -5,8 +5,8 @@ import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { Subscription, take } from "rxjs";
 import { NotificationComponent } from "../shared/components/app-notification/app-notification.component";
 import { ConfirmModalComponent } from "../shared/components/confirm-modal/confirm-modal.component";
-import { NoteService } from "../shared/note.service";
-import { NotificationService } from "../shared/notification.service";
+import { NoteService } from "../shared/services/note.service";
+import { NotificationService } from "../shared/services/notification.service";
 import { NoteDetailModel } from "./note-detail.model";
 
 @Component({

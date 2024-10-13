@@ -1,14 +1,12 @@
-import { Injectable } from "@angular/core";
-import { LocalStorageService } from "../shared/localstorage.service";
-import { NotificationService } from "../shared/notification.service";
-import { NoteDto } from "./note.dto";
+import { inject, Injectable } from "@angular/core";
+import { LocalStorageService } from "./localstorage.service";
+import { NotificationService } from "./notification.service";
+import { NoteDto } from "../note.dto";
 
 @Injectable({ providedIn: "root" })
 export class NoteService {
-	constructor(
-		private localStorageService: LocalStorageService,
-		public notificationService: NotificationService
-	) {}
+	private localStorageService: LocalStorageService = inject(LocalStorageService);
+	public notificationService: NotificationService = inject(NotificationService);
 
 	getAll(): NoteDto[] {
 		return this.localStorageService.get() || [];

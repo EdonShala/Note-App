@@ -1,9 +1,7 @@
 import { Injectable } from "@angular/core";
-import { NoteDto } from "./note.dto";
+import { NoteDto } from "../note.dto";
 
-@Injectable({
-	providedIn: "root",
-})
+@Injectable({ providedIn: "root" })
 export class LocalStorageService {
 	set(notes: NoteDto[]): void {
 		localStorage.setItem("notes", JSON.stringify(notes));

@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormErrorComponent } from "../shared/components/form-error/form-error.component";
-import { NoteService } from "../shared/note.service";
+import { NoteService } from "../shared/services/note.service";
 import { NoteEditModel } from "./note-edit.model";
 
 @Component({

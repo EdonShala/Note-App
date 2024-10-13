@@ -3,7 +3,7 @@ import { RouterModule, RouterOutlet } from "@angular/router";
 import { Subscription, take } from "rxjs";
 import { NotificationComponent } from "../shared/components/app-notification/app-notification.component";
 import { ConfirmModalComponent } from "../shared/components/confirm-modal/confirm-modal.component";
-import { NoteService } from "../shared/note.service"; // Importiere den neuen NoteService
+import { NoteService } from "../shared/services/note.service";
 import { NoteListModel } from "./note-list.model";
 
 @Component({
