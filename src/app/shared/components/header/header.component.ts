@@ -1,10 +1,10 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
-	selector: "app-header",
+	selector: 'app-header',
 	standalone: true,
-	templateUrl: "./header.component.html",
+	templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-	@Input() title: string = "Notes";
+	@Input() title: string = 'Notes';
 }

@@ -1,14 +1,18 @@
-# Usage
+# Note App
 
--   npm install
+a light note taking app for demonstrating the usage of Angular + Typescript + Bootstrap and storing notes inside the local storage
+
+## usage
+
+-   npm i
 -   npm start
 
-## Build
+## build
 
 -   npm run build
--   npm run build:prod
 
-## Included
+## included
 
--   angular
--   bootstrap
+-   Angular
+-   Bootstrap 5
+-   Localstorage Support

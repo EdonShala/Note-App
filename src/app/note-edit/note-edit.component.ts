@@ -1,18 +1,19 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormErrorComponent } from "../shared/components/form-error/form-error.component";
-import { NoteService } from "../shared/services/note.service";
-import { NoteEditModel } from "./note-edit.model";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormErrorComponent } from '../shared/components/form-error/form-error.component';
+import { NoteDto } from '../shared/note.dto';
+import { NoteService } from '../shared/services/note.service';
+import { NoteEditModel } from './note-edit.model';
 
 @Component({
-	selector: "app-note-edit",
+	selector: 'app-note-edit',
 	standalone: true,
-	templateUrl: "./note-edit.component.html",
+	templateUrl: './note-edit.component.html',
 	imports: [ReactiveFormsModule, CommonModule, FormErrorComponent],
 })
-export class NoteEditComponent {
+export class NoteEditComponent implements OnInit {
 	id!: string;
 	note!: NoteEditModel;
 	formGroup!: FormGroup;
@@ -21,18 +22,18 @@ export class NoteEditComponent {
 		private router: Router,
 		private activeRoute: ActivatedRoute,
 		private noteService: NoteService
-	) {}
+	) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.init();
 	}
 
-	init() {
-		const idParam = this.activeRoute.snapshot.paramMap.get("id");
+	init(): void {
+		const idParam: string | null = this.activeRoute.snapshot.paramMap.get('id');
 		if (idParam) {
 			this.id = idParam;
-			if (this.id !== "0") {
-				const dto = this.noteService.get(this.id);
+			if (this.id !== '0') {
+				const dto: NoteDto | undefined = this.noteService.get(this.id);
 				this.note = new NoteEditModel(dto);
 			} else {
 				this.note = new NoteEditModel();
@@ -43,11 +44,12 @@ export class NoteEditComponent {
 				description: new FormControl(this.note.description),
 			});
 		} else {
-			console.error("No ID-Param found");
+			// eslint-disable-next-line no-console
+			console.error('No ID-Param found');
 		}
 	}
 
-	addNote() {
+	async addNote(): Promise<void> {
 		const { title, description } = this.formGroup.value;
 		if (this.formGroup.valid) {
 			this.note.title = title as string;
@@ -59,11 +61,11 @@ export class NoteEditComponent {
 				createdAt: this.note.createdAt.toString(),
 			});
 			this.formGroup.reset();
-			this.router.navigateByUrl("/");
+			await this.router.navigateByUrl('/');
 		}
 	}
 
-	cancelNote() {
-		this.router.navigateByUrl("/");
+	async cancelNote(): Promise<void> {
+		await this.router.navigateByUrl('/');
 	}
 }

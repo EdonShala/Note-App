@@ -1,4 +1,4 @@
-import { NoteDto } from "../shared/note.dto";
+import { NoteDto } from '../shared/note.dto';
 
 export class NoteListModel {
 	id: string;

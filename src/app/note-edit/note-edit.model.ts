@@ -1,5 +1,5 @@
-import { GuidHelper } from "../shared/helpers/guid.helper";
-import { NoteDto } from "../shared/note.dto";
+import { GuidHelper } from '../shared/helpers/guid.helper';
+import { NoteDto } from '../shared/note.dto';
 
 export class NoteEditModel {
 	id!: string;

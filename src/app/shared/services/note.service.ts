@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
+import { NoteDto } from "../note.dto";
 import { LocalStorageService } from "./localstorage.service";
 import { NotificationService } from "./notification.service";
-import { NoteDto } from "../note.dto";
 
 @Injectable({ providedIn: "root" })
 export class NoteService {

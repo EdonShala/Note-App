@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class NotificationService {
-	private messageSubject = new BehaviorSubject<string | null>(null);
+	private messageSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
-	setNotification(message: string) {
+	setNotification(message: string): void {
 		this.messageSubject.next(message);
 
 		setTimeout(() => {
@@ -13,11 +13,11 @@ export class NotificationService {
 		}, 3000);
 	}
 
-	getNotification() {
+	getNotification(): Observable<string | null> {
 		return this.messageSubject.asObservable();
 	}
 
-	clearNotification() {
+	clearNotification(): void {
 		this.messageSubject.next(null);
 	}
 }
