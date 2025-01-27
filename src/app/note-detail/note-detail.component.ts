@@ -25,7 +25,7 @@ export class NoteDetailComponent implements OnDestroy, OnInit {
 	) { }
 
 	id!: string;
-	note!: NoteDetailModel | undefined;
+	note!: NoteDetailModel;
 	notificationMessage: string | null = null;
 	private notificationSubscription: Subscription | undefined;
 
@@ -55,7 +55,7 @@ export class NoteDetailComponent implements OnDestroy, OnInit {
 		});
 	}
 
-	deleteOneNote(): void {
+	delete(): void {
 		this.confirmModal.onConfirm.pipe(take(1)).subscribe(async () => {
 			if (this.note) {
 				this.noteService.delete(this.note.id);
@@ -68,7 +68,7 @@ export class NoteDetailComponent implements OnDestroy, OnInit {
 		this.confirmModal.openModal();
 	}
 
-	async editNote(): Promise<void> {
+	async edit(): Promise<void> {
 		await this.router.navigateByUrl(`/edit/${this.id}`);
 	}
 }

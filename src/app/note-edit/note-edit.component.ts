@@ -49,7 +49,7 @@ export class NoteEditComponent implements OnInit {
 		}
 	}
 
-	async addNote(): Promise<void> {
+	async add(): Promise<void> {
 		const { title, description } = this.formGroup.value;
 		if (this.formGroup.valid) {
 			this.note.title = title as string;
@@ -65,7 +65,7 @@ export class NoteEditComponent implements OnInit {
 		}
 	}
 
-	async cancelNote(): Promise<void> {
+	async cancel(): Promise<void> {
 		await this.router.navigateByUrl('/');
 	}
 }

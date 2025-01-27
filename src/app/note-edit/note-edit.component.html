@@ -4,7 +4,7 @@
 			<h2 class="mb-0">{{ note.id !== "0" ? "Edit" : "New" }} Note</h2>
 		</div>
 		<div class="card-body">
-			<form [formGroup]="formGroup" (ngSubmit)="addNote()">
+			<form [formGroup]="formGroup" (ngSubmit)="add()">
 				<div class="mb-3">
 					<label for="note-title" class="form-label fw-bold">Title:</label>
 					<input
@@ -23,7 +23,7 @@
 				</div>
 				<div class="d-flex">
 					<button type="submit" class="btn btn-success rounded-pill" [disabled]="!formGroup.valid">Save</button>
-					<button class="btn btn-outline-secondary rounded-pill ms-2" type="button" (click)="cancelNote()">Cancel</button>
+					<button class="btn btn-outline-secondary rounded-pill ms-2" type="button" (click)="cancel()">Cancel</button>
 				</div>
 			</form>
 		</div>
