@@ -23,7 +23,7 @@ export class NoteListComponent implements OnInit, OnDestroy {
 	@ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
 	ngOnInit(): void {
-		const dtos: NoteDto[] | undefined = this.noteService.getAll();
+		const dtos: NoteDto[] = this.noteService.getAll();
 		this.notes = dtos.map(dto => new NoteListModel(dto)).sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
 		this.notificationSubscription = this.noteService.notificationService.getNotification().subscribe(message => {
